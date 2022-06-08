@@ -1,9 +1,10 @@
 package com.cream.zhxy_springboot.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cream.zhxy_springboot.bean.LoginForm;
-import com.cream.zhxy_springboot.bean.Student;
 import com.cream.zhxy_springboot.bean.Teacher;
 import com.cream.zhxy_springboot.mapper.TeacherMapper;
 import com.cream.zhxy_springboot.service.TeacherService;
@@ -29,5 +30,16 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> impl
         queryWrapper.eq("id", userId);
         Teacher teacher = baseMapper.selectOne(queryWrapper);
         return teacher;
+    }
+
+    @Override
+    public IPage<Teacher> getTeacherByOpr(Page<Teacher> pageParam, String clazzName, String name) {
+        QueryWrapper<Teacher> queryWrapper = new QueryWrapper<>();
+        if (clazzName != null)
+            queryWrapper.eq("clazz_name", clazzName);
+        if (name != null)
+            queryWrapper.eq("name", name);
+        Page<Teacher> page = baseMapper.selectPage(pageParam, queryWrapper);
+        return page;
     }
 }

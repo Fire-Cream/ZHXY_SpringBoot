@@ -1,6 +1,8 @@
 package com.cream.zhxy_springboot.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cream.zhxy_springboot.bean.Admin;
 import com.cream.zhxy_springboot.bean.LoginForm;
@@ -28,5 +30,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         queryWrapper.eq("id", userId);
         Admin admin = baseMapper.selectOne(queryWrapper);
         return admin;
+    }
+
+    @Override
+    public IPage<Admin> getAdminByOpr(Page<Admin> pageParam, String name) {
+        QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();
+        if (name != null)
+            queryWrapper.eq("name", name);
+        Page<Admin> page = baseMapper.selectPage(pageParam, queryWrapper);
+        return page;
     }
 }

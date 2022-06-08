@@ -23,5 +23,5 @@ public class Clazz {
     private String headmaster;
     private String email;
     private String telephone;
-    private String grade_name;
+    private String gradeName;
 }
